@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  odoo:
+    image: odoo:18.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=db
+      - USER=stockmind
+      - PASSWORD=stockmind
+    restart: always
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=odoo
+      - POSTGRES_USER=stockmind
+      - POSTGRES_PASSWORD=stockmind
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db_data:
